@@ -352,6 +352,13 @@ app.get('/pay', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'pay.html'));
 });
 
+// Apple Pay domain verification — served verbatim so Apple/Square can verify the
+// domain (express.static ignores dot-directories, so this needs its own route).
+app.get('/.well-known/apple-developer-merchantid-domain-association', (req, res) => {
+  res.type('text/plain');
+  res.sendFile(path.join(__dirname, 'public', '.well-known', 'apple-developer-merchantid-domain-association'));
+});
+
 // Static assets.
 app.use(express.static(path.join(__dirname, 'public'), { extensions: ['html'] }));
 
